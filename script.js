@@ -1,57 +1,23 @@
-function solution(clothes) {
-    let portion = [{ value: "zero", key: 0 }];
-    let newSet = { value: null, key: 1 }
-    let tag = true
+function solution(param0) {
+    let save= 0;
+    let token= 0;
+    let slot = []
 
-    for (let i = 0; i < clothes.length; i++) {
-
-        for (let s = 0; s < portion.length; s++) {
-            if (portion[s].value === clothes[i][1]) {
-                portion[s].key++;
-                tag = false
-            }
+    for(let i= 0; i < param0.length ; i++) {
+        token=0;
+        while(token !== -1) {
+            save=token;
+            token=param0[i].indexOf("/", token+1);
         }
 
-        if (tag) {
-            const text = clothes[i][1]
-            newSet = {
-                value: text,
-                key: 1
-            }
-            portion.push(newSet);
-        }
-
-        tag = true
-    }
-
-    portion.shift()
-
-    console.log(portion)
-
-    let sort = 0;
-    let sum = (2 * portion.length) - 1
-    let token = 2 ** (portion.length - 1)
-    console.log(token)
-
-    for (let p = 0; p < portion.length; p++) {
-        if (portion[p].key > 1) {
-            sum += token * (portion[p].key - 1);
-            sort = portion[p].key
-            console.log(sum)
-        }
-
-        if (sort < portion[p].key) {
-            console.log("ns")
-            token++
-            sum += token;
-        }
+        const sub = param0[i].substr(save+1, 1) +"."+ param0[i].substr(param0[i].length-1,1);
+        slot.push(sub)
 
     }
 
-    return sum
+    return slot
 }
 
-
-const clothes = [["yellowhat", "headgear"], ["crowmask", "face"], ["bluesunglasses", "face"], ["green_turban", "headgear"]]
-const result = solution(clothes);
+const param0 = ["/a/a/b_v1.z", "/b/b/d/c_v5.c", "/d/c/b_v6.z"]
+const result = solution(param0)
 console.log(result)
